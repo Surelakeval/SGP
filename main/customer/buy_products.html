@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Products</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            background-image: linear-gradient(rgba(138, 197, 149, 0.5), rgba(138, 197, 149, 0.5)), url('https://indian-retailer.s3.ap-south-1.amazonaws.com/s3fs-public/2024-07/Top%20Grocery%20Brands%20in%20India_0.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: #333;
+            padding-top: 60px;
+        }
+
+        .navbar {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 10px 20px;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .menu {
+            display: flex;
+            gap: 15px;
+        }
+
+        .navbar .menu a {
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar .menu a:hover {
+            background-color: darkgreen;
+        }
+        .navbar .menu a.sale-link {
+            background-image: linear-gradient(45deg, #9be15d, #00e676); /* Green gradient for SALE link */
+            color: white;
+            animation: sparkle 2s infinite;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes sparkle {
+            0%, 100% {
+                text-shadow: 0 0 5px rgba(255, 255, 255, 0.8), 0 0 10px rgba(255, 255, 255, 0.6);
+            }
+            50% {
+                text-shadow: 0 0 15px rgba(255, 255, 255, 1), 0 0 20px rgba(255, 255, 255, 0.9);
+            }
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 32px;
+            margin: 80px 0 20px 0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: rgba(0, 100, 0, 0.8);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .quantity-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-controls button {
+            width: 30px;
+            height: 30px;
+            font-size: 18px;
+            background-color: rgba(0, 100, 0, 0.8);
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .quantity-controls button:hover {
+            background-color: darkgreen;
+        }
+
+        .quantity-controls input {
+            width: 40px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .buy-btn {
+            background-color: darkgreen;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .buy-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="menu">
+            <a href="customer.html">Home</a>
+            <a href="buy-products.html">Buy Products</a>
+            <a href="sale.html" class="sale-link">SALE</a>
+            <a href="about-us.html">Contact Us</a>
+            <a href="../main.html">Logout</a>
+        </div>
+    </div>
+
+    <h1>Buy Products</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Item ID</th>
+                <th>Item Name</th>
+                <th>Category</th>
+                <th>Available Quantity</th>
+                <th>Status</th>
+                <th>Price (₹)</th>
+                <th>Need Quantity</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Milk 500ml</td>
+                <td>Dairy</td>
+                <td>50</td>
+                <td>Fresh</td>
+                <td>30</td>
+                <td>
+                    <div class="quantity-controls">
+                        <button onclick="decreaseQuantity(1)">-</button>
+                        <input type="number" id="quantity-1" value="1" min="1" max="50">
+                        <button onclick="increaseQuantity(1, 50)">+</button>
+                    </div>
+                </td>
+                <td>
+                    <button class="buy-btn">Buy</button>
+                </td>
+            </tr>
+            <!-- Add more rows as necessary -->
+        </tbody>
+        <tbody>
+            <tr>
+                <td>2</td>
+                <td>Bread Loaf</td>
+                <td>Baked goods</td>
+                <td>20</td>
+                <td>Near Expiry</td>
+                <td>40</td>
+                <td>
+                    <div class="quantity-controls">
+                        <button onclick="decreaseQuantity(2)">-</button>
+                        <input type="number" id="quantity-2" value="1" min="1" max="20">
+                        <button onclick="increaseQuantity(2, 20)">+</button>
+                    </div>
+                </td>
+                <td>
+                    <button class="buy-btn">Buy</button>
+                </td>
+            </tr>
+            <!-- Add more rows as necessary -->
+        </tbody>
+        <tbody>
+            <tr>
+                <td>3</td>
+                <td>Apples</td>
+                <td>Fruits</td>
+                <td>100</td>
+                <td>Fresh</td>
+                <td>150</td>
+                <td>
+                    <div class="quantity-controls">
+                        <button onclick="decreaseQuantity(3)">-</button>
+                        <input type="number" id="quantity-3" value="1" min="1" max="100">
+                        <button onclick="increaseQuantity(3, 100)">+</button>
+                    </div>
+                </td>
+                <td>
+                    <button class="buy-btn">Buy</button>
+                </td>
+            </tr>
+            <!-- Add more rows as necessary -->
+        </tbody>
+        <tbody>
+            <tr>
+                <td>4</td>
+                <td>Yogurt Cup</td>
+                <td>Dairy</td>
+                <td>60</td>
+                <td>Near Expiry</td>
+                <td>20</td>
+                <td>
+                    <div class="quantity-controls">
+                        <button onclick="decreaseQuantity(4)">-</button>
+                        <input type="number" id="quantity-4" value="1" min="1" max="60">
+                        <button onclick="increaseQuantity(4, 60)">+</button>
+                    </div>
+                </td>
+                <td>
+                    <button class="buy-btn">Buy</button>
+                </td>
+            </tr>
+            <!-- Add more rows as necessary -->
+        </tbody>
+        <tbody>
+            <tr>
+                <td>5</td>
+                <td>Spinach</td>
+                <td>Vegetables</td>
+                <td>30</td>
+                <td>Near Expiry</td>
+                <td>25</td>
+                <td>
+                    <div class="quantity-controls">
+                        <button onclick="decreaseQuantity(5)">-</button>
+                        <input type="number" id="quantity-5" value="1" min="1" max="30">
+                        <button onclick="increaseQuantity(5, 30)">+</button>
+                    </div>
+                </td>
+                <td>
+                    <button class="buy-btn">Buy</button>
+                </td>
+            </tr>
+            <!-- Add more rows as necessary -->
+        </tbody>
+        <tbody>
+            <tr>
+                <td>6</td>
+                <td>Chocolate Cookies</td>
+                <td>Snacks</td>
+                <td>40</td>
+                <td>Fresh</td>
+                <td>50</td>
+                <td>
+                    <div class="quantity-controls">
+                        <button onclick="decreaseQuantity(6)">-</button>
+                        <input type="number" id="quantity-6" value="1" min="1" max="40">
+                        <button onclick="increaseQuantity(6, 40)">+</button>
+                    </div>
+                </td>
+                <td>
+                    <button class="buy-btn">Buy</button>
+                </td>
+            </tr>
+            <!-- Add more rows as necessary -->
+        </tbody>
+        <tbody>
+            <tr>
+                <td>7</td>
+                <td>Wheat</td>
+                <td>Grains</td>
+                <td>25</td>
+                <td>Near Expiry</td>
+                <td>200</td>
+            <td>
+                    <div class="quantity-controls">
+                        <button onclick="decreaseQuantity(7)">-</button>
+                        <input type="number" id="quantity-7" value="1" min="1" max="25">
+                        <button onclick="increaseQuantity(7, 25)">+</button>
+                    </div>
+                </td>
+                <td>
+                    <button class="buy-btn">Buy</button>
+            </td>
+        </tr>
+        </tbody>
+        <tbody>
+            <tr>
+                <td>8</td>
+                <td>Orange Juice 1L</td>
+                <td>Beverages</td>
+                <td>15</td>
+                <td>Fresh</td>
+                <td>60</td>
+                <td>
+                    <div class="quantity-controls">
+                        <button onclick="decreaseQuantity(8)">-</button>
+                        <input type="number" id="quantity-8" value="1" min="1" max="15">
+                        <button onclick="increaseQuantity(8, 15)">+</button>
+                    </div>
+                </td>
+                <td>
+                    <button class="buy-btn">Buy</button>
+                </td>
+            </tr>
+            <!-- Add more rows as necessary -->
+        </tbody>
+        <tbody>
+            <tr>
+                <td>9</td>
+                <td>Rice (Basmati)</td>
+                <td>Grains</td>
+                <td>200</td>
+                <td>Fresh</td>
+                <td>90</td>
+                <td>
+                    <div class="quantity-controls">
+                        <button onclick="decreaseQuantity(9)">-</button>
+                        <input type="number" id="quantity-9" value="1" min="1" max="200">
+                        <button onclick="increaseQuantity(9, 200)">+</button>
+                    </div>
+                </td>
+                <td>
+                    <button class="buy-btn">Buy</button>
+                </td>
+            </tr>
+            <!-- Add more rows as necessary -->
+        </tbody>
+        <tbody>
+            <tr>
+                <td>10</td>
+                <td>Tomato Ketchup</td>
+                <td>Condiments</td>
+                <td>30</td>
+                <td>Fresh</td>
+                <td>80</td>
+                <td>
+                    <div class="quantity-controls">
+                        <button onclick="decreaseQuantity(10)">-</button>
+                        <input type="number" id="quantity-10" value="1" min="1" max="30">
+                        <button onclick="increaseQuantity(10, 30)">+</button>
+                    </div>
+                </td>
+                <td>
+                    <button class="buy-btn">Buy</button>
+                </td>
+            </tr>
+            <!-- Add more rows as necessary -->
+        </tbody>
+    </table>
+
+    <script>
+        function increaseQuantity(id, maxQuantity) {
+            const inputField = document.getElementById(`quantity-${id}`);
+            let currentValue = parseInt(inputField.value);
+            if (currentValue < maxQuantity) {
+                inputField.value = currentValue + 1;
+            }
+        }
+
+        function decreaseQuantity(id) {
+            const inputField = document.getElementById(`quantity-${id}`);
+            let currentValue = parseInt(inputField.value);
+            if (currentValue > 1) {
+                inputField.value = currentValue - 1;
+            }
+        }
+    </script>
+</body>
+</html>
